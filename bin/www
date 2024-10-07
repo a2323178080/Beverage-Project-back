@@ -12,8 +12,9 @@ const http = require('http');
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '3052');
-app.set('port', port);
+// Vercel will handle the port, no need to manually set it
+// const port = normalizePort(process.env.PORT || '3052');
+// app.set('port', port);
 
 /**
  * Create HTTP server.
@@ -25,9 +26,8 @@ const server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+// server.listen(port);
+server.listen(); // Vercel will handle the port
 
 /**
  * Normalize a port into a number, string, or false.
@@ -58,18 +58,19 @@ function onError(error) {
     throw error;
   }
 
-  const bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+  // Vercel handles port binding, so this part might not be necessary
+  // const bind = typeof port === 'string'
+  //   ? 'Pipe ' + port
+  //   : 'Port ' + port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
+      console.error('Requires elevated privileges');
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
+      console.error('Port is already in use');
       process.exit(1);
       break;
     default:
