@@ -9,11 +9,11 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "bin/www"
+      "dest": "/api/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "bin/www"
+      "dest": "/$1"
     }
   ]
 }
