@@ -369,8 +369,13 @@ router.post('/admin/product', async (req, res) => {
     const decodedToken = jwt.verify(authHeader, SECRET_KEY);
     const productData = req.body.data;
 
-    if (!productData.category || !productData.content || !productData.description || !productData.imageUrl || !productData.title || !productData.unit) {
+    if (!productData.category || !productData.content || !productData.description || !productData.title || !productData.unit) {
       return res.status(400).json({ success: false, message: ["所有都必須填寫喔"] });
+    }
+
+    // 檢查 imageUrl 或上傳的圖片是否存在
+    if (!productData.imageUrl && (!req.file || !req.files)) {
+      return res.status(400).json({ success: false, message: ["請上傳圖片或提供圖片網址"] });
     }
 
     const newProductRef = productsRef.push();
